@@ -58,8 +58,8 @@ def calculate_metrics(
     tail_samples = min(len(error), max(1, int(round(steady_state_window_s / dt_s))))
     tail_error = error[-tail_samples:]
 
-    pump_energy_kwh = float(np.trapz(result.pump_command, result.time_s) / 3600.0 * pump_power_kw)
-    pumped_volume_m3 = float(np.trapz(result.pump_flow_m3_s, result.time_s))
+    pump_energy_kwh = float(_integrate(result.pump_command, result.time_s) / 3600.0 * pump_power_kw)
+    pumped_volume_m3 = float(_integrate(result.pump_flow_m3_s, result.time_s))
 
     return PerformanceMetrics(
         controller=result.controller_name,
@@ -107,3 +107,10 @@ def _median_dt(time_s: np.ndarray) -> float:
     if len(time_s) < 2:
         return 1.0
     return float(np.median(np.diff(time_s)))
+
+
+def _integrate(y: np.ndarray, x: np.ndarray) -> float:
+    trapezoid = getattr(np, "trapezoid", None)
+    if trapezoid is not None:
+        return float(trapezoid(y, x))
+    return float(np.trapz(y, x))

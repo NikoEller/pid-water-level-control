@@ -1,0 +1,5 @@
+controller,overshoot_m,overshoot_percent,settling_time_s,steady_state_error_m,mean_absolute_error_m,pump_energy_kwh,pumped_volume_m3,max_pump_command_percent
+Open loop,1.2309,102.58,,0.8871,0.8073,0.02,3.84,2.0
+P,0.1162,9.69,975.0,0.0032,0.0314,0.1887,36.233,69.74
+PI,0.0843,7.02,931.0,-0.0071,0.0252,0.1914,36.741,70.66
+PID,0.0574,4.78,919.0,-0.0022,0.0156,0.191,36.666,70.46

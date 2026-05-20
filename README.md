@@ -33,18 +33,19 @@ Projekt bildet genau diese Fragestellung in einer ueberschaubaren Simulation ab.
 Der Regler arbeitet diskret mit einer festen Abtastzeit. Im Projekt ist der
 Fehler als
 
-\[
-e_k = h_k - h_{set}
-\]
+```math
+e_k = h_k - h_{\mathrm{set}}
+```
 
 definiert. Ein positiver Fehler bedeutet also: Der Wasserstand ist zu hoch und
 die Pumpe soll staerker laufen.
 
 Der PID-Regler berechnet die Stellgroesse aus P-, I- und D-Anteil:
 
-\[
-u_k = K_P e_k + K_I \sum e_k \Delta t + K_D \frac{e_k - e_{k-1}}{\Delta t}
-\]
+```math
+u_k = K_P e_k + K_I \sum_{i=0}^{k} e_i \Delta t
+      + K_D \frac{e_k - e_{k-1}}{\Delta t}
+```
 
 Die Stellgroesse wird auf den Bereich `0.0 ... 1.0` begrenzt, was einer
 Pumpenleistung von 0 bis 100 % entspricht. Der I-Anteil wird begrenzt und bei
@@ -56,10 +57,11 @@ kann. Dadurch wird Integrator-Windup reduziert.
 Das Becken wird als Einzustandsmodell beschrieben. Der Zustand ist der
 Wasserstand `h` in Metern:
 
-\[
+```math
 \frac{dh}{dt} =
-\frac{q_{in}(t) + q_{rain}(t) - q_{out}(h) - q_{pump}(u)}{A}
-\]
+\frac{q_{\mathrm{in}}(t) + q_{\mathrm{rain}}(t)
+      - q_{\mathrm{out}}(h) - q_{\mathrm{pump}}(u)}{A}
+```
 
 mit:
 
@@ -71,21 +73,21 @@ mit:
 
 Der freie Ablauf wird als einfache Wurzelkennlinie modelliert:
 
-\[
-q_{out}(h) = c \sqrt{h}
-\]
+```math
+q_{\mathrm{out}}(h) = c \sqrt{h}
+```
 
 Die Pumpe ist linear zur normierten Stellgroesse:
 
-\[
-q_{pump}(u) = u \cdot q_{pump,max}, \quad 0 \le u \le 1
-\]
+```math
+q_{\mathrm{pump}}(u) = u \cdot q_{\mathrm{pump,max}}, \quad 0 \le u \le 1
+```
 
 Die diskrete Simulation nutzt ein explizites Euler-Verfahren:
 
-\[
+```math
 h_{k+1} = h_k + \Delta t \cdot \frac{dh}{dt}
-\]
+```
 
 ## Installation
 

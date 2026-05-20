@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Theorie | PID Water Level Control</title>
+  <meta name="description" content="Regelungstechnische Theorie zum Wasserstandsmodell und PID-Regler.">
+  <link rel="stylesheet" href="./styles.css">
+</head>
+<body>
+  <header class="site-header">
+    <div class="nav-shell">
+      <a class="brand" href="./index.html">
+        <span class="brand-mark">PID</span>
+        <span class="brand-text">Water Level Control</span>
+      </a>
+      <nav class="nav-links">
+        <a href="./index.html">Start</a>
+        <a href="./results.html">Ergebnisse</a>
+        <a href="#" data-repo-path="src/water_level_control" data-repo-kind="tree">Code</a>
+      </nav>
+    </div>
+  </header>
+
+  <header class="hero">
+    <div class="hero-inner">
+      <div class="hero-copy">
+        <p class="eyebrow">Theorie</p>
+        <h1>Vom Becken zum Regler</h1>
+        <p class="lead">
+          Das Projekt nutzt ein bewusst kompaktes Modell erster Ordnung. Es ist
+          fachlich erklaerbar, diskret simulierbar und gut geeignet, um
+          Regelungstechnik in Python sichtbar zu machen.
+        </p>
+      </div>
+      <aside class="hero-panel editor-window">
+        <div class="editor-topbar">
+          <span class="dot red"></span>
+          <span class="dot yellow"></span>
+          <span class="dot green"></span>
+          <span class="editor-file">tank_equation.txt</span>
+        </div>
+        <div class="formula">
+<pre><code>dh/dt = (q_in + q_rain - q_out - q_pump) / A</code></pre>
+        </div>
+      </aside>
+    </div>
+  </header>
+
+  <main class="page content">
+    <section class="section">
+      <div class="section-heading">
+        <p class="kicker">Tankmodell</p>
+        <h2>Ein Zustand: der Wasserstand</h2>
+      </div>
+      <div class="content-layout">
+        <div>
+          <p>
+            Der Wasserstand `h(t)` wird als Zustandsmodell erster Ordnung
+            beschrieben. Die effektive Beckenflaeche `A` verbindet Volumenstrom
+            und Aenderung des Wasserstands.
+          </p>
+          <p>
+            Der freie Ablauf wird als Wurzelkennlinie angenaehert. Die Pumpe
+            wird ueber eine normierte Stellgroesse `u` zwischen 0 und 1
+            beschrieben.
+          </p>
+        </div>
+        <div class="code-card">
+          <div class="editor-topbar">
+            <span class="dot red"></span>
+            <span class="dot yellow"></span>
+            <span class="dot green"></span>
+            <span class="editor-file">model.txt</span>
+          </div>
+<pre><code>q_out(h)  = c * sqrt(h)
+q_pump(u) = u * q_pump_max
+0 <= u <= 1</code></pre>
+        </div>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="section-heading">
+        <p class="kicker">Diskrete Simulation</p>
+        <h2>Euler-Schritt mit fester Abtastzeit</h2>
+      </div>
+      <div class="code-card">
+        <div class="editor-topbar">
+          <span class="dot red"></span>
+          <span class="dot yellow"></span>
+          <span class="dot green"></span>
+          <span class="editor-file">euler_step.txt</span>
+        </div>
+<pre><code>h[k + 1] = h[k] + Delta_t * dh_dt</code></pre>
+      </div>
+      <p>
+        Nach jedem Schritt wird der Wasserstand auf den physikalisch sinnvollen
+        Bereich zwischen 0 m und maximaler Beckenhoehe begrenzt.
+      </p>
+    </section>
+
+    <section class="section">
+      <div class="section-heading">
+        <p class="kicker">PID-Regler</p>
+        <h2>Positiver Fehler bedeutet: Pumpe staerker fahren</h2>
+      </div>
+      <div class="content-layout">
+        <div>
+          <p>
+            Im Projekt ist der Fehler als `e[k] = h[k] - h_set` definiert. Ist
+            der Wasserstand zu hoch, wird der Fehler positiv und die
+            Pumpenleistung steigt.
+          </p>
+          <p>
+            Der I-Anteil wird begrenzt. Ausserdem pausiert die Integration,
+            wenn die Pumpe bereits an einer Stellgrenze liegt und der Fehler die
+            Saettigung weiter verstaerken wuerde.
+          </p>
+        </div>
+        <div class="code-card">
+          <div class="editor-topbar">
+            <span class="dot red"></span>
+            <span class="dot yellow"></span>
+            <span class="dot green"></span>
+            <span class="editor-file">pid.txt</span>
+          </div>
+<pre><code>u[k] = Kp * e[k]
+     + Ki * sum(e[i] * Delta_t)
+     + Kd * (e[k] - e[k-1]) / Delta_t</code></pre>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="footer-shell">
+      <p>PID Water Level Control</p>
+      <div class="footer-links">
+        <a href="./index.html">Start</a>
+        <a href="./results.html">Ergebnisse</a>
+        <a href="#" data-repo-path="README.md" data-repo-kind="blob">README</a>
+      </div>
+    </div>
+  </footer>
+  <script src="./site.js"></script>
+</body>
+</html>

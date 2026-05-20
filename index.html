@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>PID Water Level Control</title>
+  <meta name="description" content="Portfolio-Projekt zur PID-Wasserstandsregelung mit Python, Simulation, Plots und Tests.">
+  <meta name="keywords" content="PID, Regelungstechnik, Python, Wasserstand, Infrastruktur, Simulation">
+  <meta name="author" content="Niko Eller">
+  <meta property="og:title" content="PID Water Level Control">
+  <meta property="og:description" content="Wasserstandsregelung eines kleinen Speicherbeckens mit Modellbildung, PID-Regler und Ergebnisplots.">
+  <meta property="og:type" content="website">
+  <meta property="og:locale" content="de_DE">
+  <link rel="stylesheet" href="./styles.css">
+</head>
+<body>
+  <header class="site-header">
+    <div class="nav-shell">
+      <a class="brand" href="./index.html">
+        <span class="brand-mark">PID</span>
+        <span class="brand-text">Water Level Control</span>
+      </a>
+      <nav class="nav-links">
+        <a href="#workflow">Workflow</a>
+        <a href="#results">Plots</a>
+        <a href="./theory.html">Theorie</a>
+        <a href="./results.html">Ergebnisse</a>
+        <a href="#" data-repo-path="README.md" data-repo-kind="blob">README</a>
+      </nav>
+    </div>
+  </header>
+
+  <header class="hero">
+    <div class="hero-inner">
+      <div class="hero-copy">
+        <p class="eyebrow">Regelungstechnik und Infrastruktur</p>
+        <h1>PID-Regelung fuer Wasserstand</h1>
+        <p class="lead">
+          Ein Python-Projekt zur Simulation eines Pumpensumpfs oder kleinen
+          Rueckhaltebeckens mit Stoergroesse, Stellgrenzen, Anti-Windup,
+          Kennwerten und reproduzierbaren Plots.
+        </p>
+        <div class="hero-actions">
+          <a class="button primary" href="./results.html">Ergebnisse ansehen</a>
+          <a class="button secondary" href="#" data-repo-path="src/water_level_control" data-repo-kind="tree">Quellcode</a>
+        </div>
+      </div>
+
+      <aside class="hero-panel editor-window">
+        <div class="editor-topbar">
+          <span class="dot red"></span>
+          <span class="dot yellow"></span>
+          <span class="dot green"></span>
+          <span class="editor-file">control_loop.py</span>
+        </div>
+        <div class="editor-code">
+<pre><code><span class="line-comment"># projektprofil</span>
+<span class="line"><span class="type">model</span> = <span class="string">"tank + pump + rain"</span></span>
+<span class="line"><span class="type">controllers</span> = [<span class="string">"open loop"</span>, <span class="string">"P"</span>, <span class="string">"PI"</span>, <span class="string">"PID"</span>]</span>
+<span class="line"><span class="type">pump</span> = <span class="func">limit</span>(u, <span class="number">0.0</span>, <span class="number">1.0</span>)</span>
+<span class="line"><span class="func">simulate</span>(dt=<span class="number">1.0</span>, anti_windup=<span class="keyword">True</span>)</span></code></pre>
+        </div>
+      </aside>
+    </div>
+  </header>
+
+  <main class="page">
+    <section class="stats-strip">
+      <article class="stat-card">
+        <strong>4</strong>
+        <span>Betriebsarten im Vergleich</span>
+      </article>
+      <article class="stat-card">
+        <strong>1 s</strong>
+        <span>Diskrete Abtastzeit</span>
+      </article>
+      <article class="stat-card">
+        <strong>0-100 %</strong>
+        <span>Begrenzte Pumpenleistung</span>
+      </article>
+      <article class="stat-card">
+        <strong>pytest</strong>
+        <span>Automatisierte Tests</span>
+      </article>
+    </section>
+
+    <section class="section intro">
+      <div class="section-heading">
+        <p class="kicker">Warum dieses Projekt?</p>
+        <h2>Regelungstechnik als erklaerbares Infrastrukturmodell</h2>
+      </div>
+      <div class="grid three">
+        <article class="card">
+          <h3>Realistischer Kontext</h3>
+          <p>Das Modell steht fuer Pumpensuempfe, Rueckhaltebecken und kleine Speicheranlagen in kommunaler Infrastruktur.</p>
+        </article>
+        <article class="card">
+          <h3>Saubere Regelung</h3>
+          <p>Der PID-Regler nutzt P-, I- und D-Anteil, Stellgroessenbegrenzung und Anti-Windup fuer den I-Anteil.</p>
+        </article>
+        <article class="card">
+          <h3>Portfolio-tauglich</h3>
+          <p>Quellcode, Tests, README, Ergebnisse und diese Pages-Seite zeigen das Projekt als nachvollziehbare Arbeit.</p>
+        </article>
+      </div>
+    </section>
+
+    <section class="section path" id="workflow">
+      <div class="section-heading">
+        <p class="kicker">Arbeitsweise</p>
+        <h2>Vom Modell zur Bewertung</h2>
+      </div>
+      <div class="path-grid">
+        <article class="path-step">
+          <span>1</span>
+          <h3>Tank modellieren</h3>
+          <p>Wasserstand, Zufluss, freier Ablauf und Pumpenabfluss werden als diskretes Zustandsmodell simuliert.</p>
+        </article>
+        <article class="path-step">
+          <span>2</span>
+          <h3>Regler vergleichen</h3>
+          <p>Open Loop, P, PI und PID laufen im gleichen Regenereignis und werden direkt miteinander verglichen.</p>
+        </article>
+        <article class="path-step">
+          <span>3</span>
+          <h3>Kennwerte auswerten</h3>
+          <p>Ueberschwingen, Einschwingzeit, stationaerer Fehler und Pumpenenergie landen reproduzierbar in einer CSV.</p>
+        </article>
+      </div>
+    </section>
+
+    <section class="section roadmap">
+      <div class="section-heading">
+        <p class="kicker">Projektmodule</p>
+        <h2>Die wichtigsten Bausteine im Repository</h2>
+      </div>
+      <div class="topic-grid">
+        <a class="topic-card" href="#" data-repo-path="src/water_level_control/tank_model.py" data-repo-kind="blob">
+          <span class="topic-number">01</span>
+          <strong>Tankmodell</strong>
+          <span>Physikalische Parameter, Ablauf, Pumpenfluss und Euler-Schritt.</span>
+        </a>
+        <a class="topic-card featured" href="#" data-repo-path="src/water_level_control/pid.py" data-repo-kind="blob">
+          <span class="topic-number">02</span>
+          <strong>PID-Regler</strong>
+          <span>Diskreter Regler mit Anti-Windup und Stellgroessenbegrenzung.</span>
+        </a>
+        <a class="topic-card" href="#" data-repo-path="src/water_level_control/simulation.py" data-repo-kind="blob">
+          <span class="topic-number">03</span>
+          <strong>Simulation</strong>
+          <span>Gemeinsame Simulationsschleife fuer Open Loop, P, PI und PID.</span>
+        </a>
+        <a class="topic-card" href="#" data-repo-path="src/water_level_control/metrics.py" data-repo-kind="blob">
+          <span class="topic-number">04</span>
+          <strong>Metriken</strong>
+          <span>Ueberschwingen, Einschwingzeit, Fehler und Energieverbrauch.</span>
+        </a>
+        <a class="topic-card" href="#" data-repo-path="src/water_level_control/plotting.py" data-repo-kind="blob">
+          <span class="topic-number">05</span>
+          <strong>Visualisierung</strong>
+          <span>Matplotlib-Plots fuer Wasserstand, Pumpe, Zufluss und Vergleich.</span>
+        </a>
+        <a class="topic-card" href="#" data-repo-path="tests" data-repo-kind="tree">
+          <span class="topic-number">06</span>
+          <strong>Tests</strong>
+          <span>pytest-Abdeckung fuer Regler, Tankgrenzen und Ergebnisarrays.</span>
+        </a>
+      </div>
+    </section>
+
+    <section class="section results-preview" id="results">
+      <div class="section-heading">
+        <p class="kicker">Simulationsergebnis</p>
+        <h2>PID reduziert das Ueberschwingen sichtbar</h2>
+        <p class="section-copy">
+          Das Demo-Szenario nutzt einen ploetzlichen Regenzufluss zwischen Minute
+          5 und Minute 15. Die Visualisierungen werden aus dem Python-Code
+          erzeugt und liegen im Repository unter `results/`.
+        </p>
+      </div>
+      <div class="plot-grid">
+        <article class="plot-card">
+          <img src="./assets/results/controller_comparison.png" alt="Vergleich von P, PI und PID">
+          <div>
+            <h3>Vergleich P / PI / PID</h3>
+            <p>Der PID-Regler zeigt in dieser Abstimmung die kleinste maximale Abweichung vom Sollwert.</p>
+          </div>
+        </article>
+        <article class="plot-card">
+          <img src="./assets/results/pump_command_over_time.png" alt="Pumpenleistung ueber Zeit">
+          <div>
+            <h3>Pumpenleistung</h3>
+            <p>Die Stellgroesse bleibt auf den Bereich von 0 bis 100 Prozent begrenzt.</p>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <section class="section structure" id="struktur">
+      <div class="section-heading">
+        <p class="kicker">Struktur</p>
+        <h2>Sauberer Aufbau im src-Layout</h2>
+      </div>
+      <div class="structure-layout">
+        <div class="code-card">
+          <div class="editor-topbar">
+            <span class="dot red"></span>
+            <span class="dot yellow"></span>
+            <span class="dot green"></span>
+            <span class="editor-file">project_structure.txt</span>
+          </div>
+<pre><code><span class="path">pid-water-level-control/</span>
+<span class="path">|- src/water_level_control/</span>
+<span class="path">|  |- tank_model.py</span>
+<span class="path">|  |- pid.py</span>
+<span class="path">|  |- simulation.py</span>
+<span class="path">|  |- metrics.py</span>
+<span class="path">|  `- plotting.py</span>
+<span class="path">|- examples/run_pid_demo.py</span>
+<span class="path">|- tests/</span>
+<span class="path">`- docs/</span></code></pre>
+        </div>
+        <div class="closing-links">
+          <a class="link-tile" href="./theory.html">
+            <strong>Theorie</strong>
+            <span>Tankgleichung, diskrete Simulation, PID und Anti-Windup.</span>
+          </a>
+          <a class="link-tile" href="./results.html">
+            <strong>Ergebnisse</strong>
+            <span>Kennwerttabelle, Plots und kurze Interpretation.</span>
+          </a>
+          <a class="link-tile" href="#" data-repo-path="examples/run_pid_demo.py" data-repo-kind="blob">
+            <strong>Demo-Script</strong>
+            <span>Ausfuehren, Plots generieren und CSV exportieren.</span>
+          </a>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="footer-shell">
+      <p>PID Water Level Control</p>
+      <div class="footer-links">
+        <a href="#" data-repo-path="README.md" data-repo-kind="blob">README</a>
+        <a href="#" data-repo-path="results/metrics_summary.csv" data-repo-kind="blob">Metrics CSV</a>
+        <a href="./results.html">Pages Results</a>
+      </div>
+    </div>
+  </footer>
+  <script src="./site.js"></script>
+</body>
+</html>

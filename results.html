@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Ergebnisse | PID Water Level Control</title>
+  <meta name="description" content="Simulationsergebnisse und Kennwerte der PID-Wasserstandsregelung.">
+  <link rel="stylesheet" href="./styles.css">
+</head>
+<body>
+  <header class="site-header">
+    <div class="nav-shell">
+      <a class="brand" href="./index.html">
+        <span class="brand-mark">PID</span>
+        <span class="brand-text">Water Level Control</span>
+      </a>
+      <nav class="nav-links">
+        <a href="./index.html">Start</a>
+        <a href="./theory.html">Theorie</a>
+        <a href="#" data-repo-path="results/metrics_summary.csv" data-repo-kind="blob">CSV</a>
+      </nav>
+    </div>
+  </header>
+
+  <header class="hero">
+    <div class="hero-inner">
+      <div class="hero-copy">
+        <p class="eyebrow">Simulationsergebnisse</p>
+        <h1>Reglervergleich mit Regenstoerung</h1>
+        <p class="lead">
+          Das Demo-Szenario laeuft 40 Minuten. Zwischen Minute 5 und Minute 15
+          tritt ein zusaetzlicher Regenzufluss auf. Alle Kennwerte werden aus
+          denselben Ergebnisarrays berechnet.
+        </p>
+      </div>
+      <aside class="hero-panel editor-window">
+        <div class="editor-topbar">
+          <span class="dot red"></span>
+          <span class="dot yellow"></span>
+          <span class="dot green"></span>
+          <span class="editor-file">metrics_summary.csv</span>
+        </div>
+        <div class="editor-code">
+<pre><code><span class="line-comment"># bestes Ueberschwingen</span>
+<span class="line"><span class="type">PID</span>: <span class="number">0.0574</span> m</span>
+<span class="line"><span class="type">P</span>:   <span class="number">0.1162</span> m</span>
+<span class="line"><span class="type">PI</span>:  <span class="number">0.0843</span> m</span></code></pre>
+        </div>
+      </aside>
+    </div>
+  </header>
+
+  <main class="page">
+    <section class="metric-grid">
+      <article class="metric-card">
+        <strong>0.0574 m</strong>
+        <span>PID-Ueberschwingen</span>
+      </article>
+      <article class="metric-card">
+        <strong>919 s</strong>
+        <span>PID-Einschwingzeit</span>
+      </article>
+      <article class="metric-card">
+        <strong>-0.0022 m</strong>
+        <span>Stationaerer Fehler</span>
+      </article>
+      <article class="metric-card">
+        <strong>0.1910</strong>
+        <span>kWh Pumpenenergie</span>
+      </article>
+    </section>
+
+    <section class="section">
+      <div class="section-heading">
+        <p class="kicker">Kennwerttabelle</p>
+        <h2>Open Loop, P, PI und PID im Vergleich</h2>
+      </div>
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th>Regler</th>
+              <th>Ueberschwingen [m]</th>
+              <th>Einschwingzeit [s]</th>
+              <th>Stationaerer Fehler [m]</th>
+              <th>Energie [kWh]</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Ungeregelt</td>
+              <td>1.2309</td>
+              <td>-</td>
+              <td>0.8871</td>
+              <td>0.0200</td>
+            </tr>
+            <tr>
+              <td>P</td>
+              <td>0.1162</td>
+              <td>975.0</td>
+              <td>0.0032</td>
+              <td>0.1887</td>
+            </tr>
+            <tr>
+              <td>PI</td>
+              <td>0.0843</td>
+              <td>931.0</td>
+              <td>-0.0071</td>
+              <td>0.1914</td>
+            </tr>
+            <tr>
+              <td>PID</td>
+              <td>0.0574</td>
+              <td>919.0</td>
+              <td>-0.0022</td>
+              <td>0.1910</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="section-heading">
+        <p class="kicker">Plots</p>
+        <h2>Automatisch erzeugte Visualisierungen</h2>
+      </div>
+      <div class="plot-grid">
+        <article class="plot-card">
+          <img src="./assets/results/water_level_over_time.png" alt="Wasserstand ueber Zeit">
+          <div>
+            <h3>Wasserstand ueber Zeit</h3>
+            <p>Der ungeregelte Betrieb steigt stark an, waehrend die Regler den Pegel begrenzen.</p>
+          </div>
+        </article>
+        <article class="plot-card">
+          <img src="./assets/results/setpoint_vs_actual_pid.png" alt="Sollwert vs Istwert">
+          <div>
+            <h3>Sollwert vs. Istwert</h3>
+            <p>Der PID-Regler faengt die Stoergroesse ab und naehert sich wieder dem Sollwert.</p>
+          </div>
+        </article>
+        <article class="plot-card">
+          <img src="./assets/results/pump_command_over_time.png" alt="Pumpenleistung ueber Zeit">
+          <div>
+            <h3>Pumpenleistung</h3>
+            <p>Die Stellgroesse bleibt normiert und zeigt die Reaktion auf das Regenereignis.</p>
+          </div>
+        </article>
+        <article class="plot-card">
+          <img src="./assets/results/inflow_disturbance.png" alt="Zufluss und Stoergroesse">
+          <div>
+            <h3>Zufluss und Stoergroesse</h3>
+            <p>Der zusaetzliche Regenzufluss ist als rechteckige Stoergroesse modelliert.</p>
+          </div>
+        </article>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="footer-shell">
+      <p>PID Water Level Control</p>
+      <div class="footer-links">
+        <a href="./index.html">Start</a>
+        <a href="./theory.html">Theorie</a>
+        <a href="#" data-repo-path="examples/run_pid_demo.py" data-repo-kind="blob">Demo</a>
+      </div>
+    </div>
+  </footer>
+  <script src="./site.js"></script>
+</body>
+</html>
